@@ -25,10 +25,19 @@ mongoose.connect(process.env.MONGO_URL, {
     useUnifiedTopology: true
 }).then(console.log("Connected to MongoDB")).catch((err)=>{console.log(err)})
 
-//basic greeting from operational API
-app.get('/', (req, res)=>{
-    res.send("Hello Hydrogen PST crew! The API is running...")
-})
+//Heroku Deployment
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static("client/build"))
+    app.get("*", (req, res)=>{
+        const __dirname = path.dirname(new URL(import.meta.URL).pathname)
+        res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+    })
+}else{
+    app.get('/', (req, res)=>{
+        //basic greeting from operational API
+        res.send("Hello Hydrogen PST crew! The API is running...")
+    })
+}
     
 //app listening
 app.listen(SERVER_PORT, ()=>{console.log(`Server running at ${SERVER_PORT}`)})
