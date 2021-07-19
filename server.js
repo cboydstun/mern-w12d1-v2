@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
+import path from 'path'
 
 //initalize express app
 const app = express()
@@ -24,6 +25,16 @@ mongoose.connect(process.env.MONGO_URL, {
     useFindAndModify: false,
     useUnifiedTopology: true
 }).then(console.log("Connected to MongoDB")).catch((err)=>{console.log(err)})
+
+//import routes
+import userRouter from './routes/users.js'
+import authRouter from './routes/auth.js'
+import todoRouter from './routes/todos.js'
+
+//initalize routes
+app.use('/api/users', userRouter)
+app.use('/api/auth', authRouter)
+app.use('/api/todos', todoRouter)
 
 //Heroku Deployment
 if(process.env.NODE_ENV === "production"){
