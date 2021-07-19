@@ -24,6 +24,11 @@ mongoose.connect(process.env.MONGO_URL, {
     useFindAndModify: false,
     useUnifiedTopology: true
 }).then(console.log("Connected to MongoDB")).catch((err)=>{console.log(err)})
+
+//basic greeting from operational API
+app.get('/', (req, res)=>{
+    res.send("Hello Hydrogen PST crew! The API is running...")
+})
     
 //app listening
 app.listen(SERVER_PORT, ()=>{console.log(`Server running at ${SERVER_PORT}`)})
