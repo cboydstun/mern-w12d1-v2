@@ -8,7 +8,7 @@
     "start": "node server.js",
     "client": "yarn start --prefix client",
     "dev": "concurrently \"yarn run server\" \"yarn run client\" ",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client &&npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "repository": "https://github.com/cboydstun/mern-w12d1-v2.git",
   "author": "Chris Boydstun <52934303+cboydstun@users.noreply.github.com>",
