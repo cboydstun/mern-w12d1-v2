@@ -1,14 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Hey Hydrogen Pod!</h1>
-      </header>
-    </div>
-  );
+export default function App() {
+    return (
+        <div>
+            hey from app
+        </div>
+    )
 }
-
-export default App;
