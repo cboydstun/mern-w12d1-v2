@@ -24,7 +24,7 @@ router.get('/', auth, async(req, res)=>{
 })
 
 
-//@POST - /api/auth - login with emial and password - Public
+//@POST - /api/auth - login with email and password - Public
 router.post('/', [
     check("email", "Please include a valid email address").isEmail(),
     check("password", "Password is required").exists()

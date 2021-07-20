@@ -46,7 +46,7 @@ if(process.env.NODE_ENV === "production"){
 }else{
     app.get('/', (req, res)=>{
         //basic greeting from operational API
-        res.send("Hello Hydrogen PST crew! The API is running...")
+        res.send("Hello Hydrogen crew! The API is running...")
     })
 }
     
