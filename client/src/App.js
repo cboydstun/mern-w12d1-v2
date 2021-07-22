@@ -1,9 +1,29 @@
+//import dependencies
 import React from 'react'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+
+//import auth token
+import setAuthToken from './utils/setAuthToken'
+
+//import components
+import Navbar from './components/Navbar'
+
+//import styling
+import './App.css'
+
+//check for token
+if(localStorage.token){
+    setAuthToken(localStorage.token)
+}
+
 
 export default function App() {
     return (
-        <div>
-            hey from app
-        </div>
+        <Router>
+            <Navbar />
+            <Switch>
+
+            </Switch>
+        </Router>
     )
 }
