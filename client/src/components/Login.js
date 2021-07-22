@@ -1,76 +1,82 @@
-///import dependencies
-import React, {useState, useEffect} from 'react'
-import {Form, Button, Container, Alert} from 'react-bootstrap'
-import {Redirect} from 'react-router-dom'
+//import dependencies
+import React, { useState, useEffect } from "react";
+import { Form, Button, Container, Alert } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 
 //import context
-import {loadUser, login} from '../context/actions'
-import { useStateValue } from '../context/StateProvider'
+import { loadUser, login } from "../context/actions";
+import { useStateValue } from "../context/StateProvider";
 
-export default function Login() {
-    const [state, dispatch] = useStateValue();
-    const {error, token, authenticated} = state;
-    const [password, setPassword] = useState('')
-    const [email, setEmail] = useState('')
+const Login = () => {
+  const [state, dispatch] = useStateValue();
+  const { error, token, authenticated } = state;
+  const [password, setPassword] = useState("");
+  const [email, setEmial] = useState("");
 
-    const submitHandler = (e) => {
-        e.preventDefault();
-
-        if(email && password){
-            login(dispatch, {email, password})
-        }else{
-            dispatch({
-                type:"SET_ERROR",
-                payload: "Credentials not valid."
-            })
-        }
-    }   
-
-    const setError = () => {
-        dispatch({
-            type: "CLEAR_ERROR",
-        });
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (email && password) {
+      login(dispatch, { email, password });
+    } else {
+      dispatch({
+        type: "SET_ERROR",
+        payload: "Both email and password are required!",
+      });
     }
+  };
 
-    useEffect(()=>{})
- 
-    return (
-        <Container className="mt-4">
-            <h3 className="text-center">Login</h3>
-            {authenticated && <Redirect to={"/"} />}
+  const setError = () => {
+    dispatch({
+      type: "CLEAR_ERROR",
+    });
+  };
 
-            {error && (
-                <Alert variant="danger" onClose={()=>{ setError()}} dismissible>
-                    <Alert.Heading>You've got an error!</Alert.Heading>
-                    <p>{error}</p>
-                </Alert>
-            )}
+  useEffect(() => {
+    setError();
+    if (token) {
+      loadUser(dispatch);
+    }
+    // eslint-disable-next-line
+  }, [token, dispatch]);
+  
+  return (
+    <Container className="mt-5">
+      <h3 className="text-center">Login</h3>
+      {authenticated && <Redirect to={"/"} />}
 
-            <Form onSubmit={submitHandler}>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control 
-                        value={email}
-                        type="email"
-                        placeholder="Enter Email"
-                        onChange={(e)=>{setEmail(e.target.value)}}
-                    />
-                </Form.Group>
+      {error && (
+        <Alert variant="danger" onClose={() => setError()} dismissible>
+          <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+          <p>{error}</p>
+        </Alert>
+      )}
+      <Form onSubmit={submitHandler}>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            onChange={(e) => setEmial(e.target.value)}
+            value={email}
+            type="email"
+            placeholder="Enter email"
+          />
+        </Form.Group>
 
-                <Form.Group>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control 
-                        value={password}
-                        type="password"
-                        placeholder="Enter Password"
-                        onChange={(e)=>{setPassword(e.target.value)}}
-                    />
-                </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Group>
 
-                <Button type="submit" variant="danger">
-                    Submit
-                </Button>
-            </Form>
-        </Container>
-    )
-}
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
+    </Container>
+  );
+};
+
+export default Login;
