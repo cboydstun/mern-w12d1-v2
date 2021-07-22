@@ -7,6 +7,9 @@ import setAuthToken from './utils/setAuthToken'
 
 //import components
 import Navbar from './components/Navbar'
+import Home from './components/Home'
+import Register from './components/Register'
+import Login from './components/Login'
 
 //import styling
 import './App.css'
@@ -16,13 +19,14 @@ if(localStorage.token){
     setAuthToken(localStorage.token)
 }
 
-
 export default function App() {
     return (
         <Router>
             <Navbar />
             <Switch>
-
+                <Route exact path="/" component={Home} />
+                <Route path="/register" component={Register} />
+                <Route path="/login" component={Login} />
             </Switch>
         </Router>
     )
